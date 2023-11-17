@@ -1,4 +1,4 @@
-output "main" {
+output "vpc" {
   value = aws_vpc.main
 }
 
