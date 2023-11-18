@@ -6,7 +6,7 @@ resource "aws_eip" "vpc_iep" {
 
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.vpc_iep.id
-  subnet_id     = aws_subnet.public_subnet_1a.id
+  subnet_id     = aws_subnet.public_subnets[0].id
 
   tags = {
     Name = format("%s-nat-gateway", var.project_name)
