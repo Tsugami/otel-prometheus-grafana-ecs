@@ -1,9 +1,12 @@
 {
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/index.js",
+    "dev": "node src/index.js | pino-pretty"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "pino-http": "^8.5.1",
+    "pino-pretty": "^10.2.3"
   }
 }

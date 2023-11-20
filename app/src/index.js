@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require('cors');
+const logger = require("pino-http");
 
 const app = express();
 
@@ -10,6 +11,7 @@ const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
 app.use(cors());
+app.use(logger());
 
 app.get("/", async (_req, res) => {
   await wait(DELAY_MS);

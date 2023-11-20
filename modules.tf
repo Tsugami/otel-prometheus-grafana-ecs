@@ -33,3 +33,20 @@ module "otel-service" {
     module.ecs.security_group.id
   ]
 }
+
+module "app-service" {
+  source = "./modules/ecs-services/app"
+
+  aws_region        = var.aws_region
+  ecs_cluster       = module.ecs.ecs_cluster
+  aws_vpc           = module.network.vpc
+  public_subnet_ids = module.network.public_subnet_ids
+  private_subnets   = module.network.private_subnet_ids
+  # ecs_task_execution_role = module.ecs.ecs_task_execution_role
+  # ecs_task_role           = module.ecs.ecs_task_role
+
+  security_groups = [
+    module.network.security_group.id,
+    module.ecs.security_group.id
+  ]
+}
