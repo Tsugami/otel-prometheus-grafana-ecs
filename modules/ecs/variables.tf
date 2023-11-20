@@ -10,6 +10,6 @@ variable "max_size" {}
 
 variable "min_size" {}
 
-variable "vpc_zone_identifier" {}
+variable "private_subnet_ids" {}
 
 variable instance_type {}

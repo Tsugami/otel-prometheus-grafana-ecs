@@ -7,33 +7,29 @@ module "network" {
   project_name = var.project_name
 }
 
-# module "ecs" {
-#   source = "./modules/ecs"
+module "ecs" {
+  source = "./modules/ecs"
 
-#   aws_region          = var.aws_region
-#   project_name        = var.project_name
-#   aws_vpc             = module.network.vpc
-#   instance_type       = "t3.micro"
-#   desired_capacity    = 2
-#   min_size            = 0
-#   max_size            = 10
-#   vpc_zone_identifier = [module.network.private_subnet_1a.id, module.network.private_subnet_1c.id]
-# }
+  aws_region         = var.aws_region
+  project_name       = var.project_name
+  aws_vpc            = module.network.vpc
+  instance_type      = "t2.micro"
+  desired_capacity   = 1
+  min_size           = 0
+  max_size           = 10
+  private_subnet_ids = module.network.private_subnet_ids
+}
 
-# module "otel-service" {
-#   source = "./modules/ecs-services/otel"
+module "otel-service" {
+  source = "./modules/ecs-services/otel"
 
-#   aws_region              = var.aws_region
-#   ecs_task_execution_role = module.ecs.ecs_task_execution_role
-#   ecs_task_role           = module.ecs.ecs_task_role
-#   ecs_cluster             = module.ecs.ecs_cluster
+  aws_region      = var.aws_region
+  ecs_cluster     = module.ecs.ecs_cluster
+  private_subnets = module.network.private_subnet_ids
+  # ecs_task_execution_role = module.ecs.ecs_task_execution_role
+  # ecs_task_role           = module.ecs.ecs_task_role
 
-#   private_subnets = [
-#     module.network.private_subnet_1a.id,
-#     module.network.private_subnet_1c.id
-#   ]
-
-#   security_groups = [
-#     module.ecs.security_group.id
-#   ]
-# }
+  security_groups = [
+    module.ecs.security_group.id
+  ]
+}

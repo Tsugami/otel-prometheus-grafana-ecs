@@ -14,12 +14,11 @@ resource "aws_ecs_capacity_provider" "main" {
 }
 
 resource "aws_autoscaling_group" "main" {
-  name             = "${var.project_name}-ecs-asg"
-  desired_capacity = var.desired_capacity
-  max_size         = var.max_size
-  min_size         = var.min_size
-
-  vpc_zone_identifier = var.vpc_zone_identifier
+  name                = "${var.project_name}-ecs-asg"
+  desired_capacity    = var.desired_capacity
+  max_size            = var.max_size
+  min_size            = var.min_size
+  vpc_zone_identifier = var.private_subnet_ids
 
   lifecycle {
     ignore_changes = [desired_capacity]
@@ -58,7 +57,7 @@ resource "aws_launch_template" "this" {
   )
 
   iam_instance_profile {
-    name = "ecsInstanceRole"
+    arn = aws_iam_instance_profile.ecsInstanceRole.arn
   }
 
   tag_specifications {
