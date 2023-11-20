@@ -52,6 +52,8 @@ resource "aws_launch_template" "this" {
         ECS_CLUSTER=${aws_ecs_cluster.main.name}
         ECS_LOGLEVEL=debug
         ECS_ENABLE_TASK_IAM_ROLE=true
+        ECS_CONTAINER_STOP_TIMEOUT=2
+        ECS_IMAGE_PULL_BEHAVIOR=prefer-cached
         EOF
       EOT
   )
